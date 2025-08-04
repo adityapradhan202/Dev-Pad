@@ -3,18 +3,264 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
+        <title>Login - DevPad</title>
+        <!-- Include the common styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/common-styles.css') }}">
+        <style>
+            .login-container {
+                max-width: 500px;
+                margin: 50px auto;
+            }
+            
+            .login-header {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            
+            .login-subtitle {
+                color: #666;
+                font-size: 1.1rem;
+                margin-top: 10px;
+            }
+            
+            .form-group {
+                margin-bottom: 25px;
+            }
+            
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 600;
+                color: #555;
+            }
+            
+            .form-group input {
+                width: 100%;
+                padding: 15px 20px;
+                border: 2px solid rgba(102, 126, 234, 0.3);
+                border-radius: 12px;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                background: rgba(255, 255, 255, 0.9);
+            }
+            
+            .form-group input:focus {
+                outline: none;
+                border-color: #667eea;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+                background: white;
+            }
+            
+            .form-actions {
+                display: flex;
+                gap: 15px;
+                margin-top: 30px;
+            }
+            
+            .form-actions button,
+            .form-actions input[type="submit"],
+            .form-actions input[type="reset"] {
+                flex: 1;
+                padding: 15px;
+                border: none;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            input[type="submit"] {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            }
+            
+            input[type="submit"]:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            }
+            
+            input[type="reset"] {
+                background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+                color: white;
+                box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
+            }
+            
+            input[type="reset"]:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(149, 165, 166, 0.4);
+            }
+            
+            .back-to-home {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            .security-note {
+                background: rgba(52, 152, 219, 0.1);
+                border: 1px solid rgba(52, 152, 219, 0.3);
+                border-radius: 10px;
+                padding: 15px;
+                margin-top: 20px;
+                color: #2c3e50;
+                font-size: 14px;
+            }
+            
+            .demo-credentials {
+                background: rgba(46, 204, 113, 0.1);
+                border: 1px solid rgba(46, 204, 113, 0.3);
+                border-radius: 10px;
+                padding: 15px;
+                margin-top: 15px;
+                color: #27ae60;
+                font-size: 14px;
+            }
+            
+            .input-icon {
+                position: relative;
+            }
+            
+            .input-icon::before {
+                content: attr(data-icon);
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 18px;
+                color: #999;
+                z-index: 1;
+            }
+            
+            .input-icon input {
+                padding-left: 50px;
+            }
+            
+            @media (max-width: 600px) {
+                .form-actions {
+                    flex-direction: column;
+                }
+            }
+        </style>
     </head>
     <body>
-        <form method="post">
-            <label for="user_name">Enter username:</label>
-            <input type="text" id="user_name" placeholder="bob1123" name="username">
-            <label for="user_pass">Enter password:</label>
-            <input type="password" id="user_pass" placeholder="password here" name="userpass">
+        <div class="container login-container">
+            <div class="back-to-home">
+                <a href="/" class="btn btn-back">
+                    🏠 Back to Home
+                </a>
+            </div>
+            
+            <div class="login-header">
+                <h1>🔐 Welcome Back!</h1>
+                <p class="login-subtitle">
+                    Sign in to access your DevPad and continue working on your ideas
+                </p>
+            </div>
+            
+            <div class="form-container">
+                <form method="post" id="loginForm">
+                    <div class="form-group">
+                        <label for="user_name">👤 Username:</label>
+                        <div class="input-icon" data-icon="👤">
+                            <input 
+                                type="text" 
+                                id="user_name" 
+                                name="username" 
+                                placeholder="Enter your username"
+                                required
+                                autocomplete="username"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="user_pass">🔒 Password:</label>
+                        <div class="input-icon" data-icon="🔒">
+                            <input 
+                                type="password" 
+                                id="user_pass" 
+                                name="userpass" 
+                                placeholder="Enter your password"
+                                required
+                                autocomplete="current-password"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <input type="reset" value="🔄 Clear Form">
+                        <input type="submit" value="🚀 Sign In">
+                    </div>
+                </form>
+                
+                <div class="demo-credentials">
+                    <strong>🎯 Demo Account:</strong><br>
+                    Don't have an account? You can use these demo credentials to explore DevPad:<br>
+                    <strong>Username:</strong> demo_user | <strong>Password:</strong> demo123
+                </div>
+                
+                <div class="security-note">
+                    <strong>🛡️ Security Note:</strong> 
+                    Your credentials are securely handled. We recommend using a unique password 
+                    for your DevPad account.
+                </div>
+            </div>
+        </div>
 
-            <br>
-            <input type="reset">
-            <input type="submit">
-        </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('loginForm');
+                const submitBtn = document.querySelector('input[type="submit"]');
+                const resetBtn = document.querySelector('input[type="reset"]');
+                
+                // Add loading state to submit button
+                form.addEventListener('submit', function(e) {
+                    submitBtn.value = '⏳ Signing In...';
+                    submitBtn.disabled = true;
+                    submitBtn.style.opacity = '0.7';
+                    
+                    // Re-enable after 3 seconds in case of error
+                    setTimeout(() => {
+                        submitBtn.value = '🚀 Sign In';
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                    }, 3000);
+                });
+                
+                // Add confirmation to reset button
+                resetBtn.addEventListener('click', function(e) {
+                    if (!confirm('🔄 Are you sure you want to clear all fields?')) {
+                        e.preventDefault();
+                    }
+                });
+                
+                // Auto-focus on username field
+                document.getElementById('user_name').focus();
+                
+                // Show password strength indicator (simple version)
+                const passwordField = document.getElementById('user_pass');
+                passwordField.addEventListener('input', function() {
+                    const password = this.value;
+                    const strength = getPasswordStrength(password);
+                    
+                    // You could add a strength indicator here
+                    console.log('Password strength:', strength);
+                });
+                
+                function getPasswordStrength(password) {
+                    if (password.length < 4) return 'weak';
+                    if (password.length < 8) return 'medium';
+                    return 'strong';
+                }
+                
+                // Add enter key support for form submission
+                document.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && document.activeElement.tagName !== 'BUTTON') {
+                        form.submit();
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

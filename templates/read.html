@@ -3,12 +3,404 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Read</title>
+        <title>Read Post - DevPad</title>
+        <!-- Include the common styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/common-styles.css') }}">
+        <style>
+            .read-container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            
+            .post-header {
+                text-align: center;
+                margin-bottom: 40px;
+                padding-bottom: 20px;
+                border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+            }
+            
+            .post-content {
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 15px;
+                padding: 40px;
+                margin: 30px 0;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                position: relative;
+            }
+            
+            .post-content::before {
+                content: '"';
+                position: absolute;
+                top: -10px;
+                left: 20px;
+                font-size: 4rem;
+                color: rgba(102, 126, 234, 0.3);
+                font-family: serif;
+            }
+            
+            .post-text {
+                font-size: 1.2rem;
+                line-height: 1.8;
+                color: #333;
+                text-align: justify;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                font-family: 'Georgia', serif;
+            }
+            
+            .post-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid rgba(102, 126, 234, 0.2);
+                font-size: 14px;
+                color: #666;
+            }
+            
+            .word-count {
+                background: rgba(102, 126, 234, 0.1);
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-weight: 600;
+            }
+            
+            .reading-time {
+                background: rgba(46, 204, 113, 0.1);
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-weight: 600;
+                color: #27ae60;
+            }
+            
+            .action-buttons {
+                display: flex;
+                gap: 15px;
+                justify-content: center;
+                margin-top: 40px;
+                flex-wrap: wrap;
+            }
+            
+            .reading-tools {
+                background: rgba(255, 255, 255, 0.7);
+                border-radius: 15px;
+                padding: 20px;
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .font-controls {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .font-btn {
+                background: rgba(102, 126, 234, 0.1);
+                border: 1px solid rgba(102, 126, 234, 0.3);
+                border-radius: 8px;
+                padding: 8px 12px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: 600;
+            }
+            
+            .font-btn:hover {
+                background: rgba(102, 126, 234, 0.2);
+                transform: translateY(-1px);
+            }
+            
+            .theme-toggle {
+                background: rgba(149, 165, 166, 0.1);
+                border: 1px solid rgba(149, 165, 166, 0.3);
+                border-radius: 8px;
+                padding: 8px 15px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: 600;
+            }
+            
+            .theme-toggle:hover {
+                background: rgba(149, 165, 166, 0.2);
+            }
+            
+            .dark-theme .post-content {
+                background: rgba(44, 62, 80, 0.9);
+                color: #ecf0f1;
+            }
+            
+            .dark-theme .post-text {
+                color: #ecf0f1;
+            }
+            
+            .print-btn {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                z-index: 1000;
+            }
+            
+            .print-btn:hover {
+                transform: scale(1.1);
+                box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+            }
+            
+            @media (max-width: 768px) {
+                .post-content {
+                    padding: 25px;
+                }
+                
+                .post-text {
+                    font-size: 1.1rem;
+                }
+                
+                .reading-tools {
+                    flex-direction: column;
+                    align-items: stretch;
+                    text-align: center;
+                }
+                
+                .action-buttons {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+                
+                .print-btn {
+                    bottom: 10px;
+                    right: 10px;
+                    width: 50px;
+                    height: 50px;
+                    font-size: 20px;
+                }
+            }
+            
+            @media print {
+                body * {
+                    visibility: hidden;
+                }
+                
+                .post-content, .post-content * {
+                    visibility: visible;
+                }
+                
+                .post-content {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    background: white !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                }
+                
+                .print-btn, .action-buttons, .reading-tools {
+                    display: none !important;
+                }
+            }
+        </style>
     </head>
     <body>
-        <a href="{{url_for('user')}}"><button>Go Back</button></a>
-        <div>
-            <p>{{content}}</p>
+        <div class="container read-container">
+            <a href="{{url_for('user')}}" class="btn btn-back">← Back to Posts</a>
+            
+            <div class="post-header">
+                <h2>📖 Reading Your Post</h2>
+            </div>
+            
+            <div class="reading-tools">
+                <div class="font-controls">
+                    <span>📝 Font Size:</span>
+                    <button class="font-btn" onclick="changeFontSize(-2)">A-</button>
+                    <button class="font-btn" onclick="changeFontSize(2)">A+</button>
+                    <button class="font-btn" onclick="resetFontSize()">Reset</button>
+                </div>
+                
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    🌓 Toggle Dark Mode
+                </button>
+            </div>
+            
+            <div class="post-content" id="postContent">
+                <div class="post-text" id="postText">{{content}}</div>
+                
+                <div class="post-meta">
+                    <div class="word-count" id="wordCount">
+                        📊 Loading word count...
+                    </div>
+                    <div class="reading-time" id="readingTime">
+                        ⏱️ Loading reading time...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="{{url_for('edit', pid=request.view_args.get('pid', ''))}}" class="btn btn-warning">
+                    ✏️ Edit This Post
+                </a>
+                <button class="btn btn-primary" onclick="sharePost()">
+                    📤 Share Post
+                </button>
+                <button class="btn btn-success" onclick="copyToClipboard()">
+                    📋 Copy Text
+                </button>
+            </div>
         </div>
+        
+        <button class="print-btn" onclick="printPost()" title="Print Post">
+            🖨️
+        </button>
+
+        <script>
+            let currentFontSize = 19.2; // 1.2rem in pixels (assuming 16px base)
+            let isDarkTheme = false;
+
+            document.addEventListener('DOMContentLoaded', function() {
+                calculateWordCount();
+                calculateReadingTime();
+            });
+
+            function calculateWordCount() {
+                const text = document.getElementById('postText').textContent;
+                const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+                const wordCount = words.length;
+                const charCount = text.length;
+                
+                document.getElementById('wordCount').innerHTML = 
+                    `📊 ${wordCount} words • ${charCount} characters`;
+            }
+
+            function calculateReadingTime() {
+                const text = document.getElementById('postText').textContent;
+                const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+                const wordsPerMinute = 200; // Average reading speed
+                const minutes = Math.ceil(words.length / wordsPerMinute);
+                
+                document.getElementById('readingTime').innerHTML = 
+                    `⏱️ ${minutes} min read`;
+            }
+
+            function changeFontSize(delta) {
+                currentFontSize += delta;
+                
+                // Set reasonable limits
+                if (currentFontSize < 12) currentFontSize = 12;
+                if (currentFontSize > 28) currentFontSize = 28;
+                
+                document.getElementById('postText').style.fontSize = currentFontSize + 'px';
+            }
+
+            function resetFontSize() {
+                currentFontSize = 19.2;
+                document.getElementById('postText').style.fontSize = '1.2rem';
+            }
+
+            function toggleTheme() {
+                isDarkTheme = !isDarkTheme;
+                document.body.classList.toggle('dark-theme', isDarkTheme);
+                
+                const toggleBtn = document.querySelector('.theme-toggle');
+                toggleBtn.textContent = isDarkTheme ? '☀️ Light Mode' : '🌓 Dark Mode';
+            }
+
+            function sharePost() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'My DevPad Post',
+                        text: document.getElementById('postText').textContent,
+                        url: window.location.href
+                    }).catch(console.error);
+                } else {
+                    // Fallback: copy URL to clipboard
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        alert('📋 Post URL copied to clipboard!');
+                    }).catch(() => {
+                        prompt('📋 Copy this URL to share:', window.location.href);
+                    });
+                }
+            }
+
+            function copyToClipboard() {
+                const text = document.getElementById('postText').textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    // Show success feedback
+                    const btn = event.target;
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '✅ Copied!';
+                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '';
+                    }, 2000);
+                }).catch(() => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('📋 Text copied to clipboard!');
+                });
+            }
+
+            function printPost() {
+                window.print();
+            }
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey) {
+                    switch(e.key) {
+                        case '+':
+                        case '=':
+                            e.preventDefault();
+                            changeFontSize(2);
+                            break;
+                        case '-':
+                            e.preventDefault();
+                            changeFontSize(-2);
+                            break;
+                        case '0':
+                            e.preventDefault();
+                            resetFontSize();
+                            break;
+                        case 'd':
+                            e.preventDefault();
+                            toggleTheme();
+                            break;
+                        case 'p':
+                            e.preventDefault();
+                            printPost();
+                            break;
+                    }
+                }
+            });
+
+            // Auto-scroll to content on load
+            window.addEventListener('load', function() {
+                document.getElementById('postContent').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        </script>
     </body>
 </html>

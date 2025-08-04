@@ -1,0 +1,321 @@
+/* common-styles.css - Include this in all your templates */
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container styles */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: slideUp 0.6s ease-out;
+}
+
+/* Typography */
+h1, h2, h3 {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+/* Button styles */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 120px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: white;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: white;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+    color: #333;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #fa709a, #fee140);
+    color: #333;
+}
+
+.btn-back {
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.btn-logout {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    color: white;
+}
+
+/* Form styles */
+.form-container {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    margin: 20px 0;
+}
+
+label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 15px;
+    display: block;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+    width: 100%;
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-radius: 12px;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    background: white;
+}
+
+textarea {
+    resize: both;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Post container styles */
+.post-container {
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.post-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-color: #667eea;
+}
+
+.post-preview {
+    color: #666;
+    font-style: italic;
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.post-actions {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.post-actions .btn {
+    margin-left: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+/* Main action buttons */
+.main-actions {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.main-actions .btn {
+    margin: 0 10px;
+}
+
+/* Utility classes */
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #7f8c8d;
+    font-size: 18px;
+}
+
+.char-counter {
+    text-align: right;
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+.form-actions {
+    margin-top: 25px;
+    text-align: center;
+}
+
+/* Animations */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.7rem;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+        min-width: 100px;
+    }
+
+    .main-actions .btn {
+        margin: 5px;
+        display: block;
+        width: 100%;
+    }
+
+    .post-actions {
+        text-align: center;
+    }
+
+    .post-actions .btn {
+        margin: 5px;
+        display: inline-block;
+    }
+
+    textarea {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+}

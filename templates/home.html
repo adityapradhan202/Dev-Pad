@@ -3,11 +3,227 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DevPad</title>
+        <title>DevPad - Where Ideas Come to Life</title>
+        <!-- Include the common styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/common-styles.css') }}">
+        <style>
+            .hero-section {
+                text-align: center;
+                padding: 60px 0;
+            }
+            
+            .hero-title {
+                font-size: 4rem;
+                font-weight: 800;
+                margin-bottom: 20px;
+                background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: glow 2s ease-in-out infinite alternate;
+            }
+            
+            @keyframes glow {
+                from { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5)); }
+                to { filter: drop-shadow(0 0 30px rgba(118, 75, 162, 0.8)); }
+            }
+            
+            .hero-subtitle {
+                font-size: 1.5rem;
+                color: #555;
+                margin-bottom: 40px;
+                font-weight: 300;
+                line-height: 1.6;
+            }
+            
+            .features-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+                margin: 50px 0;
+            }
+            
+            .feature-card {
+                background: rgba(255, 255, 255, 0.8);
+                backdrop-filter: blur(10px);
+                border-radius: 20px;
+                padding: 30px;
+                text-align: center;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                transition: all 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+            
+            .feature-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+                border-color: rgba(102, 126, 234, 0.5);
+            }
+            
+            .feature-icon {
+                font-size: 3rem;
+                margin-bottom: 20px;
+                display: block;
+            }
+            
+            .feature-title {
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 15px;
+            }
+            
+            .feature-description {
+                color: #666;
+                line-height: 1.6;
+            }
+            
+            .cta-section {
+                text-align: center;
+                margin-top: 60px;
+                padding: 40px;
+                background: rgba(255, 255, 255, 0.6);
+                border-radius: 20px;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+            
+            .login-btn {
+                font-size: 1.2rem;
+                padding: 15px 40px;
+                margin-top: 20px;
+            }
+            
+            .floating-elements {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                overflow: hidden;
+                z-index: -1;
+            }
+            
+            .floating-element {
+                position: absolute;
+                opacity: 0.1;
+                animation: float 6s ease-in-out infinite;
+            }
+            
+            .floating-element:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+            .floating-element:nth-child(2) { top: 20%; right: 10%; animation-delay: 1s; }
+            .floating-element:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 2s; }
+            .floating-element:nth-child(4) { bottom: 10%; right: 20%; animation-delay: 3s; }
+            
+            @keyframes float {
+                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                50% { transform: translateY(-20px) rotate(5deg); }
+            }
+            
+            @media (max-width: 768px) {
+                .hero-title {
+                    font-size: 2.5rem;
+                }
+                
+                .hero-subtitle {
+                    font-size: 1.2rem;
+                }
+                
+                .features-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
     </head>
-    <body> 
-        <h1>DevPad</h1>
-        <p>-Ideas become clearer when you work on them! Jot down your dev related ideas using the dev pad!</p>
-        <a href="{{url_for('login')}}"><button>Login</button></a>
+    <body>
+        <div class="floating-elements">
+            <div class="floating-element">💡</div>
+            <div class="floating-element">🚀</div>
+            <div class="floating-element">⚡</div>
+            <div class="floating-element">✨</div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-section">
+                <h1 class="hero-title">DevPad</h1>
+                <p class="hero-subtitle">
+                    💭 Ideas become clearer when you work on them!<br>
+                    Jot down your dev-related ideas and watch them evolve into something amazing.
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">📝</span>
+                    <h3 class="feature-title">Quick Notes</h3>
+                    <p class="feature-description">
+                        Capture your development ideas instantly. Whether it's a new feature concept, 
+                        a bug fix approach, or architectural thoughts - write it down before it's lost.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <h3 class="feature-title">Organize Ideas</h3>
+                    <p class="feature-description">
+                        Keep all your development thoughts in one place. Create, edit, and manage 
+                        your posts with an intuitive interface designed for developers.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3 class="feature-title">Fast & Simple</h3>
+                    <p class="feature-description">
+                        No complicated setup, no distractions. Just a clean, fast platform 
+                        that gets out of your way so you can focus on your ideas.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <h2>🚀 Ready to Start?</h2>
+                <p style="font-size: 1.1rem; color: #666; margin-bottom: 20px;">
+                    Join thousands of developers who trust DevPad with their ideas
+                </p>
+                <a href="{{url_for('login')}}" class="btn btn-primary login-btn">
+                    🔑 Get Started - Login Now
+                </a>
+                <p style="font-size: 14px; color: #999; margin-top: 15px;">
+                    New here? Don't worry, getting started is quick and easy!
+                </p>
+            </div>
+        </div>
+
+        <script>
+            // Add some interactive animations
+            document.addEventListener('DOMContentLoaded', function() {
+                // Animate feature cards on scroll
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.feature-card').forEach(card => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(50px)';
+                    card.style.transition = 'all 0.6s ease';
+                    observer.observe(card);
+                });
+
+                // Add click effect to login button
+                const loginBtn = document.querySelector('.login-btn');
+                loginBtn.addEventListener('click', function(e) {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+        </script>
     </body>
 </html>

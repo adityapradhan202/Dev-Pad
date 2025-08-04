@@ -3,23 +3,142 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit</title>
+        <title>Edit Post - DevPad</title>
+        <!-- Include the common styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/common-styles.css') }}">
         <style>
-            #edit-area{
-                width: 800px;
+            #edit-area {
                 height: 400px;
-                resize: both; /* User can resize both horizontally and vertically */
+                resize: both;
             }
-
+            
+            .edit-info {
+                background: rgba(255, 193, 7, 0.1);
+                border: 1px solid rgba(255, 193, 7, 0.3);
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 20px;
+                color: #856404;
+            }
+            
+            .version-note {
+                font-size: 14px;
+                color: #666;
+                font-style: italic;
+                margin-top: 10px;
+            }
         </style>
     </head>
     <body>
-        <a href="{{url_for('user')}}"><button>Go Back</button></a>
-        <form method="post">
-            <label for="edit-area">Edit the post here</label><br>
-            <textarea id="edit-area" name="updcontent">{{content}}</textarea>
-            <br>
-            <button type="submit">Save</button>
-        </form>
+        <div class="container">
+            <a href="{{url_for('user')}}" class="btn btn-back">← Go Back</a>
+            
+            <h2>✏️ Edit Your Post</h2>
+            
+            <div class="edit-info">
+                <strong>💡 Editing Tips:</strong>
+                <ul style="margin: 10px 0 0 20px;">
+                    <li>Make your changes in the text area below</li>
+                    <li>You can resize the editor by dragging the bottom-right corner</li>
+                    <li>Your original content is preserved until you save</li>
+                </ul>
+            </div>
+            
+            <div class="form-container">
+                <form method="post" id="editForm">
+                    <label for="edit-area">📝 Edit your post content:</label>
+                    <textarea 
+                        id="edit-area" 
+                        name="updcontent" 
+                        placeholder="Edit your post content here..."
+                        oninput="updateCharCount(); trackChanges()"
+                    >{{content}}</textarea>
+                    <div class="char-counter" id="charCounter">0 characters</div>
+                    <div class="version-note" id="changeIndicator"></div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="resetContent()">
+                            🔄 Reset to Original
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            💾 Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            const originalContent = `{{content}}`;
+            let hasChanges = false;
+
+            function updateCharCount() {
+                const textarea = document.getElementById('edit-area');
+                const counter = document.getElementById('charCounter');
+                const count = textarea.value.length;
+                counter.textContent = `${count} characters`;
+                
+                // Change color based on length
+                if (count > 1000) {
+                    counter.style.color = '#e74c3c';
+                } else if (count > 500) {
+                    counter.style.color = '#f39c12';
+                } else {
+                    counter.style.color = '#666';
+                }
+            }
+
+            function trackChanges() {
+                const textarea = document.getElementById('edit-area');
+                const indicator = document.getElementById('changeIndicator');
+                
+                hasChanges = textarea.value !== originalContent;
+                
+                if (hasChanges) {
+                    indicator.textContent = '⚠️ You have unsaved changes';
+                    indicator.style.color = '#f39c12';
+                } else {
+                    indicator.textContent = '✅ No changes made';
+                    indicator.style.color = '#27ae60';
+                }
+            }
+
+            function resetContent() {
+                if (confirm('🔄 Are you sure you want to reset to the original content? All changes will be lost.')) {
+                    document.getElementById('edit-area').value = originalContent;
+                    updateCharCount();
+                    trackChanges();
+                }
+            }
+
+            // Initialize counters
+            window.addEventListener('load', function() {
+                updateCharCount();
+                trackChanges();
+            });
+
+            // Prevent accidental page leave with unsaved changes
+            window.addEventListener('beforeunload', function(e) {
+                if (hasChanges) {
+                    e.preventDefault();
+                    e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+                }
+            });
+
+            // Clear the beforeunload when form is submitted
+            document.getElementById('editForm').addEventListener('submit', function() {
+                hasChanges = false;
+            });
+
+            // Auto-save functionality (optional)
+            let autoSaveTimeout;
+            document.getElementById('edit-area').addEventListener('input', function() {
+                clearTimeout(autoSaveTimeout);
+                autoSaveTimeout = setTimeout(() => {
+                    // You could implement auto-save to server here
+                    console.log('Auto-save triggered');
+                }, 3000);
+            });
+        </script>
     </body>
 </html>
