@@ -1,7 +1,13 @@
+# This script is for testing purpose only
+# Run this script to create a database devpad.db with table posts
 import sqlite3
 
 conn = sqlite3.connect('devpad.db')
-conn.execute("Create table Users (ID INT, NAME TEXT, USERNAME TEXT, PASS TEXT)")
-print("Table successfully created!")
+cur = conn.cursor()
+cur.execute("""
+    CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT NOT NULL)
+    """)
+
+cur.close()
 conn.close()
 

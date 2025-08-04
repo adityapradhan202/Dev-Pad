@@ -8,5 +8,19 @@
     <body>
         <h1>Welcome {{name}}! How are you!</h1>
         <a href="{{url_for('logout')}}"><button>Logout</button></a>
+
+        <br>
+        <br>
+        {% for row in all_rows %}
+            <div>
+                <p>PID - {{row["id"]}}</p>
+                <p>Content: {{row["content"]}}</p>
+                <!--Delete button-->
+                <!--Delete button redirects to login function with post-->
+                <a href="{{url_for('delete', pid=row['id'])}}"><button>Delete</button></a>
+
+                <a href="{{url_for('read', pid=row['id'])}}"><button>Read</button></a>
+            </div>
+        {% endfor %}
     </body>
 </html>
