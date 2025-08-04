@@ -25,6 +25,7 @@ def delete_posts(cur, conn, pid):
     cur.close()
     conn.close()
 
+# fetch a particular or single post
 def get_single_post(cur, conn, pid):
     cur.execute("SELECT * FROM posts WHERE ID=?", (pid,))
     row = cur.fetchone()
@@ -32,11 +33,24 @@ def get_single_post(cur, conn, pid):
     cur.close()
     conn.close()
 
-    return row
+    return row["content"]
+
+# To update a post
+def update_post(cur, conn, pid, new_cont):
+    cur.execute("UPDATE posts SET content=? WHERE id=?", (new_cont, pid))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+# To create a new post
+def create_post(cur, conn, created):
+    # created -> the new content that the user created
+    cur.execute("INSERT INTO posts (content) VALUES (?)", (created,))
+    conn.commit()
+    cur.close()
+    conn.close()
 
 
 if __name__ == "__main__":
     # Testing here
-    cur, conn = db_initialize()
-    rows = fetchall_posts(cur, conn)
-    print(rows)
+    pass

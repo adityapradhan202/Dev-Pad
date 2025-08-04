@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Create</title>
+        <style>
+            #create-area{
+                width: 800px;
+                height: 400px;
+                resize: both; /* User can resize both horizontally and vertically */
+            }
+
+        </style>
+    </head>
+    <body>
+        <a href="{{url_for('user')}}"><button>Go Back</button></a>
+        <form method="post">
+            <label for="create-area">Create a new post</label><br>
+            <textarea id="create-area" name="created">Type here...</textarea>
+            <br>
+            <button type="submit">Save</button>
+        </form>
+    </body>
+</html>

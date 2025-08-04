@@ -3,24 +3,34 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>User</title>
     </head>
     <body>
         <h1>Welcome {{name}}! How are you!</h1>
         <a href="{{url_for('logout')}}"><button>Logout</button></a>
 
-        <br>
-        <br>
-        {% for row in all_rows %}
-            <div>
-                <p>PID - {{row["id"]}}</p>
-                <p>Content: {{row["content"]}}</p>
-                <!--Delete button-->
-                <!--Delete button redirects to login function with post-->
-                <a href="{{url_for('delete', pid=row['id'])}}"><button>Delete</button></a>
+        <br><br>
+        <a href="{{url_for('create')}}"><button>Create New Post</button></a>
 
-                <a href="{{url_for('read', pid=row['id'])}}"><button>Read</button></a>
-            </div>
-        {% endfor %}
+        <br>
+        <br>
+
+        {% if all_rows|length == 0 %} <!--This is how we check length of an iterable in jina2-->
+            <p>OOPSIEE, looks like you don't have any post! Click on the create new post button to create a new post!</p>
+        {% else %}
+            {% for row in all_rows %}
+                <div>
+                    <p>PID - {{row["id"]}}</p>
+                    <p>Content: {{row["content"]}}</p>
+                    <!--Delete button-->
+                    <!--Delete button redirects to login function with post-->
+                    <a href="{{url_for('delete', pid=row['id'])}}"><button>Delete</button></a>
+
+                    <a href="{{url_for('read', pid=row['id'])}}"><button>Read</button></a>
+                    <a href="{{url_for('edit', pid=row['id'])}}"><button>Edit</button></a>
+                </div>
+            {% endfor %}
+        {% endif %} <!--End the if here-->
+        
     </body>
 </html>

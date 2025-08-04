@@ -3,14 +3,13 @@ from flask import render_template, url_for, redirect
 from flask import request
 from flask import session
 
-import dbutils as dutil
+import os
+import dbutils as db
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = str(os.getenv("SESSION_ENCRYPTION_KEY"))
 
-# decryption key for sesison data
-app.secret_key = b'catsanddogs45#33nobs'
-
-# dummy data
+# dummy data for login
 data = {
     "aditya123":"mypass123"
 }
@@ -23,8 +22,8 @@ def home():
 @app.route("/user")
 def user():
     if "username" in session:
-        cur, conn = dutil.db_initialize()
-        rows = dutil.fetchall_posts(cur, conn)
+        cur, conn = db.db_initialize()
+        rows = db.fetchall_posts(cur, conn)
         # print(rows)
         return render_template("user.html", name=session["username"], all_rows=rows)
     else:
@@ -54,13 +53,14 @@ def logout():
     session.pop("userpass", None)
     return redirect(url_for("home"))
 
-# CRUD operations here
+# CRUD operations here!
+
 # Delete
 @app.route("/delete/<int:pid>")
 def delete(pid):
     if "username" in session:
-        cur, conn = dutil.db_initialize()
-        dutil.delete_posts(cur, conn, pid)
+        cur, conn = db.db_initialize()
+        db.delete_posts(cur, conn, pid)
         return redirect(url_for("user")) # after deleting post
     else:
         return redirect(url_for("home"))
@@ -68,13 +68,43 @@ def delete(pid):
 @app.route("/read/<int:pid>")
 def read(pid):
     if "username" in session:
-        cur, conn = dutil.db_initialize()
-        row = dutil.get_single_post(cur, conn, pid)
-        content = row["content"]
+        cur, conn = db.db_initialize()
+        content = db.get_single_post(cur, conn, pid)
         return render_template("read.html", content=content)
     else:
         return redirect(url_for("home"))
+    
+@app.route("/edit/<int:pid>", methods=["GET", "POST"])
+def edit(pid):
+    if "username" in session:
+        if request.method == "GET":
+            cur, conn = db.db_initialize()
+            content = db.get_single_post(cur, conn, pid, )
+            return render_template('edit.html', content=content)
+        
+        elif request.method == "POST":
 
+            new_cont = request.form.get("updcontent")
+            cur, conn = db.db_initialize()
+            db.update_post(cur, conn, pid, new_cont)
+            return redirect(url_for("user"))
+
+    else:
+        return redirect(url_for("home"))
+    
+@app.route("/create", methods=["GET", "POST"])
+def create():
+    if "username" in session:
+        if request.method == "GET":
+            return render_template("create.html")
+        elif request.method == "POST":
+            created = request.form.get("created")
+            cur, conn = db.db_initialize()
+            db.create_post(cur, conn, created)
+            
+            return redirect(url_for("user"))
+    else:
+        return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
