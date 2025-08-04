@@ -4,30 +4,85 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>User</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                line-height: 1.6;
+            }
+            .post-container {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 15px;
+                margin: 15px 0;
+                background-color: #f9f9f9;
+            }
+            .post-preview {
+                color: #666;
+                font-style: italic;
+                margin: 10px 0;
+            }
+            .post-actions {
+                margin-top: 10px;
+            }
+            .post-actions button {
+                margin-right: 10px;
+                padding: 5px 15px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            .delete-btn { background-color: #ff6b6b; color: white; }
+            .read-btn { background-color: #4ecdc4; color: white; }
+            .edit-btn { background-color: #45b7d1; color: white; }
+            .main-actions {
+                margin-bottom: 30px;
+            }
+            .main-actions button {
+                padding: 10px 20px;
+                margin-right: 10px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            .logout-btn { background-color: #95a5a6; color: white; }
+            .create-btn { background-color: #2ecc71; color: white; }
+        </style>
     </head>
     <body>
         <h1>Welcome {{name}}! How are you!</h1>
-        <a href="{{url_for('logout')}}"><button>Logout</button></a>
+        
+        <div class="main-actions">
+            <a href="{{url_for('logout')}}"><button class="logout-btn">Logout</button></a>
+            <a href="{{url_for('create')}}"><button class="create-btn">Create New Post</button></a>
+        </div>
 
-        <br><br>
-        <a href="{{url_for('create')}}"><button>Create New Post</button></a>
-
-        <br>
-        <br>
-
-        {% if all_rows|length == 0 %} <!--This is how we check length of an iterable in jina2-->
-            <p>OOPSIEE, looks like you don't have any post! Click on the create new post button to create a new post!</p>
+        {% if all_rows|length == 0 %} <!--This is how we check length of an iterable in jinja2-->
+            <p style="text-align: center; color: #7f8c8d; font-size: 18px;">
+                OOPSIEE, looks like you don't have any posts! Click on the create new post button to create a new post!
+            </p>
         {% else %}
             {% for row in all_rows %}
-                <div>
-                    <p>PID - {{row["id"]}}</p>
-                    <p>Content: {{row["content"]}}</p>
-                    <!--Delete button-->
-                    <!--Delete button redirects to login function with post-->
-                    <a href="{{url_for('delete', pid=row['id'])}}"><button>Delete</button></a>
-
-                    <a href="{{url_for('read', pid=row['id'])}}"><button>Read</button></a>
-                    <a href="{{url_for('edit', pid=row['id'])}}"><button>Edit</button></a>
+                <div class="post-container">
+                    <p><strong>Post ID:</strong> {{row["id"]}}</p>
+                    
+                    <!-- Show only a preview of the content (first 100 characters) -->
+                    <div class="post-preview">
+                        <strong>Preview:</strong> 
+                        {% if row["content"]|length > 100 %}
+                            {{ row["content"][:100] }}...
+                        {% else %}
+                            {{ row["content"] }}
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Action buttons -->
+                    <div class="post-actions">
+                        <a href="{{url_for('read', pid=row['id'])}}"><button class="read-btn">Read Full Post</button></a>
+                        <a href="{{url_for('edit', pid=row['id'])}}"><button class="edit-btn">Edit</button></a>
+                        <a href="{{url_for('delete', pid=row['id'])}}"><button class="delete-btn">Delete</button></a>
+                    </div>
                 </div>
             {% endfor %}
         {% endif %} <!--End the if here-->
