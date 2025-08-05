@@ -4,17 +4,36 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
+
+        <link rel="stylesheet" href="../static/login.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     </head>
     <body>
-        <form method="post">
-            <label for="user_name">Enter username:</label>
-            <input type="text" id="user_name" placeholder="bob1123" name="username">
-            <label for="user_pass">Enter password:</label>
-            <input type="password" id="user_pass" placeholder="password here" name="userpass">
+        <div id="formcontainer">
+            <form method="post">
+                <div id="inputs">
+                    <!-- <label for="user_name">Enter username:</label> -->
+                    <p class="label-text">Enter username</p>
+                    <input type="text" id="user_name" placeholder="bob1123" name="username">
+                    <br>
+                    <!-- <label for="user_pass">Enter password:</label> -->
+                    <p class="label-text">Enter password</p>
+                    <input type="password" id="user_pass" placeholder="password here" name="userpass">
+                </div>
+                <br>
+                <div id="bottonbox">
+                    <input type="reset" class="form-btns" id="reset-btn">
+                    <input type="submit" class="form-btns" id="submit-btn">
+                </div>
+                <div id="demologin">
+                    <p>Don't have an account? Use these credentials to login as a guest:<br>username: aditya123, password: mypass123</p>
 
-            <br>
-            <input type="reset">
-            <input type="submit">
-        </form>
+                </div>
+            </form>
+        </div>
+        
     </body>
 </html>

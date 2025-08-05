@@ -1,0 +1,105 @@
+/*Before doing anything write the boiler plate given below, exactly!*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+    width: 100%;
+    height: 100%;
+
+    font-size: 25px;
+
+    background-image: linear-gradient(135deg, rgb(145, 85, 239), rgb(44, 8, 99));
+
+    /*Applying font family to everything*/
+    font-family: "Lato";
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#formcontainer{
+    background-color: white;
+    width: 35rem;
+    height: 24rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 0.6rem;
+}
+
+#inputs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.65rem;
+}
+
+#user_name, #user_pass{
+    width: 10rem;
+    font-size: 0.85rem;
+    border-radius: 0.35rem;
+    padding: 0.3rem;
+    background-color: rgb(236, 234, 234);
+    border: 0rem;
+}
+
+.label-text{
+    color: rgb(152, 79, 236);
+    margin: 0.3rem;
+    font-weight: bold;
+}
+
+
+#bottonbox{
+    display: flex;
+    justify-content:center;
+    margin-bottom: 1.4rem;
+}
+
+.form-btns{
+    width: 4.5rem;
+    height: 2.5rem;
+    border: 0rem;
+    border-radius: 0.45rem;
+    font-size: 0.75rem;
+
+    color: white;
+    background-image: linear-gradient(135deg, rgb(145, 85, 239), rgb(83, 28, 166));
+
+    font-family: "Lato";
+    font-weight: bold;
+}
+
+.form-btns{
+    transition: transform 0.3s ease-out;
+}
+.form-btns:hover{
+    transform: scale(1.1);
+}
+
+#submit-btn{
+    margin-left: 0.8rem;
+}
+
+/* #reset-btn{
+    margin-left: 0.8rem;
+} */
+
+
+#demologin{
+    background-color: rgb(205, 239, 186);
+    width: 30rem;
+    height: 5.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: green;
+    border-radius: 0.5rem;
+}
