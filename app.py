@@ -24,8 +24,18 @@ def user():
     if "username" in session:
         cur, conn = db.db_initialize()
         rows = db.fetchall_posts(cur, conn)
-        # print(rows)
-        return render_template("user.html", name=session["username"], all_rows=rows)
+        
+        # Logic to display a smaller part or preview of each post
+        rows_sliced = []
+        for row in rows:
+            row_dict = {}
+            sliced_id = row["id"]
+            sliced = str(row["content"])[:45]
+            row_dict["id"] = sliced_id
+            row_dict["content"] = sliced + "..."
+            rows_sliced.append(row_dict)
+        
+        return render_template("user.html", name=session["username"], all_rows=rows_sliced)
     else:
         return redirect(url_for("home"))
 
